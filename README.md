@@ -3,25 +3,26 @@
 
 ## Introduction
 
-- A self Logistic regression classifier is created manually. The performance of this classifier has been Compared with the inbuilt Logistic regression classifier.
+- FRAUDULENT TRANSACTIONS is a case of imbalanced dataset. Imbalanced dataset are the dataset where the presence of once class is very high compared to the second class. For example spame data for email.
 
-- The dataset for this project is "Heart Failure Prediction Dataset" downloaded from [Kaggle](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction).
+- The issue with imbalanced data is that most of the classification algorithms are designed for approximately equal sample of both classes.
 
-- The goal of the classifier is predicting if a person has heart disease or not based on the features like Obesity, Cholesterol level, Blood Suger, Age, Sex and so on.
+- For example if we take case of credit card transanctions, maximum 4-5 out of 100 will be fraud. In this case if I do nothing still the accuracy for zero lable is 96% which is very high.
 
-- The outflow of the project is as:
+- Some classifiers are created in this project for FRAUDULENT TRANSACTIONS and compared. The dataset used for this project is downloaded from [Kaggle](https://www.kaggle.com/datasets/vardhansiramdasu/fraudulent-transactions-prediction).
 
-    a. Overview of the data 
+- Outline of the Project is
 
-    b. Visualization
-
-    c. Data Processing
-
-    d. Classifier Modeling
-
-    e. Classifier using Scikit learn
-
-    f. Comparison And conclusion
+    - General overview of the data
+    - Visualization
+    - Issues with the Default classifier
+    - Classification using resampling
+        - Resampling
+        - Visualization
+        - Model pipeline
+        - Classificassion
+        - Results
+    - Conclusion
 
 ## Overview of the data 
 
