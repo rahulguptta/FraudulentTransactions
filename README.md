@@ -1,4 +1,4 @@
-# Heart Disease Prediction
+# Fradulent Transactions (Classification of Imbalanced Dataset)
 
 
 ## Introduction
