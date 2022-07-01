@@ -1,4 +1,4 @@
-# Fradulent Transactions (Classification of Imbalanced Dataset)
+# Fradulent Transactions <br> (Classification of Imbalanced Dataset)
 
 
 ## Introduction
@@ -24,7 +24,7 @@
         - Results
     - Conclusion
 
-## Overview of the data 
+## General overview of the data
 
 ```python
 # Imporiting the required libraries
@@ -37,107 +37,198 @@ from matplotlib import style
 plt.style.use('dark_background')
 import warnings
 warnings.filterwarnings('ignore')
+```
 
+```python
 # Importing the data
-df = pd.read_csv('heart.csv')
+df = pd.read_csv('Fraud.csv')
+df.info()
+```
+<div class="output stream stdout">
+<pre><code>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 6362620 entries, 0 to 6362619
+Data columns (total 11 columns):
+ #   Column          Dtype  
+---  ------          -----  
+ 0   step            int64  
+ 1   type            object 
+ 2   amount          float64
+ 3   nameOrig        object 
+ 4   oldbalanceOrg   float64
+ 5   newbalanceOrig  float64
+ 6   nameDest        object 
+ 7   oldbalanceDest  float64
+ 8   newbalanceDest  float64
+ 9   isFraud         int64  
+ 10  isFlaggedFraud  int64  
+dtypes: float64(5), int64(3), object(3)
+memory usage: 534.0+ MB
+</code></pre>
+</div>
+
+
+```python
 
 #The simple overview of the data is
 df.head(5)
 ```
-<center>
-<div  style="overflow-x:auto;">
+<div>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Age</th>
-      <th>Sex</th>
-      <th>ChestPainType</th>
-      <th>RestingBP</th>
-      <th>Cholesterol</th>
-      <th>FastingBS</th>
-      <th>RestingECG</th>
-      <th>MaxHR</th>
-      <th>ExerciseAngina</th>
-      <th>Oldpeak</th>
-      <th>ST_Slope</th>
-      <th>HeartDisease</th>
+      <th>step</th>
+      <th>type</th>
+      <th>amount</th>
+      <th>nameOrig</th>
+      <th>oldbalanceOrg</th>
+      <th>newbalanceOrig</th>
+      <th>nameDest</th>
+      <th>oldbalanceDest</th>
+      <th>newbalanceDest</th>
+      <th>isFraud</th>
+      <th>isFlaggedFraud</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>40</td>
-      <td>M</td>
-      <td>ATA</td>
-      <td>140</td>
-      <td>289</td>
-      <td>0</td>
-      <td>Normal</td>
-      <td>172</td>
-      <td>N</td>
+      <td>1</td>
+      <td>PAYMENT</td>
+      <td>9839.64</td>
+      <td>C1231006815</td>
+      <td>170136.00</td>
+      <td>160296.36</td>
+      <td>M1979787155</td>
       <td>0.0</td>
-      <td>Up</td>
+      <td>0.00</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>49</td>
-      <td>F</td>
-      <td>NAP</td>
-      <td>160</td>
-      <td>180</td>
-      <td>0</td>
-      <td>Normal</td>
-      <td>156</td>
-      <td>N</td>
-      <td>1.0</td>
-      <td>Flat</td>
       <td>1</td>
+      <td>PAYMENT</td>
+      <td>1864.28</td>
+      <td>C1666544295</td>
+      <td>21249.00</td>
+      <td>19384.72</td>
+      <td>M2044282225</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>37</td>
-      <td>M</td>
-      <td>ATA</td>
-      <td>130</td>
-      <td>283</td>
-      <td>0</td>
-      <td>ST</td>
-      <td>98</td>
-      <td>N</td>
+      <td>1</td>
+      <td>TRANSFER</td>
+      <td>181.00</td>
+      <td>C1305486145</td>
+      <td>181.00</td>
+      <td>0.00</td>
+      <td>C553264065</td>
       <td>0.0</td>
-      <td>Up</td>
+      <td>0.00</td>
+      <td>1</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>48</td>
-      <td>F</td>
-      <td>ASY</td>
-      <td>138</td>
-      <td>214</td>
-      <td>0</td>
-      <td>Normal</td>
-      <td>108</td>
-      <td>Y</td>
-      <td>1.5</td>
-      <td>Flat</td>
       <td>1</td>
+      <td>CASH_OUT</td>
+      <td>181.00</td>
+      <td>C840083671</td>
+      <td>181.00</td>
+      <td>0.00</td>
+      <td>C38997010</td>
+      <td>21182.0</td>
+      <td>0.00</td>
+      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>54</td>
-      <td>M</td>
-      <td>NAP</td>
-      <td>150</td>
-      <td>195</td>
-      <td>0</td>
-      <td>Normal</td>
-      <td>122</td>
-      <td>N</td>
+      <td>1</td>
+      <td>PAYMENT</td>
+      <td>11668.14</td>
+      <td>C2048537720</td>
+      <td>41554.00</td>
+      <td>29885.86</td>
+      <td>M1230701703</td>
       <td>0.0</td>
-      <td>Up</td>
+      <td>0.00</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>PAYMENT</td>
+      <td>7817.71</td>
+      <td>C90045638</td>
+      <td>53860.00</td>
+      <td>46042.29</td>
+      <td>M573487274</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>PAYMENT</td>
+      <td>7107.77</td>
+      <td>C154988899</td>
+      <td>183195.00</td>
+      <td>176087.23</td>
+      <td>M408069119</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>PAYMENT</td>
+      <td>7861.64</td>
+      <td>C1912850431</td>
+      <td>176087.23</td>
+      <td>168225.59</td>
+      <td>M633326333</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>PAYMENT</td>
+      <td>4024.36</td>
+      <td>C1265012928</td>
+      <td>2671.00</td>
+      <td>0.00</td>
+      <td>M1176932104</td>
+      <td>0.0</td>
+      <td>0.00</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>DEBIT</td>
+      <td>5337.77</td>
+      <td>C712410124</td>
+      <td>41720.00</td>
+      <td>36382.23</td>
+      <td>C195600860</td>
+      <td>41898.0</td>
+      <td>40348.79</td>
+      <td>0</td>
       <td>0</td>
     </tr>
   </tbody>
